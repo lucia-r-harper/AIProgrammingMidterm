@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Scenes/MidtermDemo.unity
+  isLoaded: 1
+  isActive: 1
