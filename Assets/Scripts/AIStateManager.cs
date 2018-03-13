@@ -6,6 +6,9 @@ using UnityEngine;
 public enum AIState { Chasing, Patroling}
 public class AIStateManager : MonoBehaviour
 {
+    public AINode Home;
+    public AINode Away;
+
     private AIState aiState;
 	// Use this for initialization
 	void Start ()
@@ -49,6 +52,7 @@ public class AIStateManager : MonoBehaviour
                 break;
             case AIState.Patroling:
                 this.gameObject.AddComponent<AIPatrolling>();
+                this.gameObject.GetComponent<AIPatrolling>().SetHomeAndAwayNodes(Home, Away);
                 break;
             default:
                 break;
