@@ -6,9 +6,11 @@ public class AINode : MonoBehaviour {
 
     public bool wasPlayerOccupyingThisNode;
     public List<AINode> NeighbourNodes = new List<AINode>();
+    public AINode nextNodeInPath;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	

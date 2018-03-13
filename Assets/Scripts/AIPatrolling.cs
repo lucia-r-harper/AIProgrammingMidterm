@@ -24,8 +24,7 @@ public class AIPatrolling : AIMovement {
 	void Start ()
     {
         nodesToPatrol = GetComponentInParent<AIStateManager>().NodesToPatrol;
-        targetNode = nodesToPatrol[0];
-        homeNode = nodesToPatrol[0];
+        targetNode = homeNode;
 	}
 	
 	// Update is called once per frame
@@ -37,25 +36,10 @@ public class AIPatrolling : AIMovement {
 
     private void UpdateTargetNode()
     {
-        foreach (AINode node in nodesToPatrol)
+        if (transform.position == targetNode.transform.position)
         {
-            //Debug.Log(nodeIndex);
-
-            if (transform.position == node.transform.position)
-            {
-
-                if ((nodesToPatrol.IndexOf(node) + 1) == nodesToPatrol.Count)
-                {
-                    //Debug.Log("hello!");
-                    targetNode = homeNode;
-                }
-                else
-                {
-                    targetNode = nodesToPatrol[nodesToPatrol.IndexOf(node) + 1];
-                }
-
-            }
-            //nodeIndex++;
+            targetNode = targetNode.nextNodeInPath;
+            PatrolToNewNode(targetNode);
         }
     }
 
@@ -77,15 +61,27 @@ public class AIPatrolling : AIMovement {
         float step = stepSpeed * Time.deltaTime;
         float turn = turnSpeed * Time.deltaTime;
 
+
         Vector3 targetDir = nodeToPatrolTo.transform.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
         Debug.DrawRay(transform.position, newDir, Color.red);
+
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
 
-        if (transform.rotation == Quaternion.LookRotation(newDir))
-        {
-            Debug.Log("hello!");
-            transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
-        }
+        Debug.Log("hello!");
+        transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
     }
+
+    //private bool isFinishedRotation(float rotationThresh)
+    //{
+    //    if (rotationThresh == 1)
+    //    {
+    //        return true;
+    //    }
+
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 }

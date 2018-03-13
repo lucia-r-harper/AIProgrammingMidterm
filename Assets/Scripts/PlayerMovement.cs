@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float verticalInputValue;
     private Vector3 inputVector = new Vector3();
 
-    private float speed = 10;
+    private float speed = 10f;
     private float angle;
 
     private Rigidbody rigidbody;
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInputValue = (Input.GetAxis(VerticalInputAxis));
 
         inputVector.x = horizontalInputValue * speed;
-        inputVector.z = verticalInputValue * speed;
+        inputVector.z = verticalInputValue *speed;
         inputVector.y = 0;
 
         angle = Mathf.Atan2(inputVector.x, inputVector.z) * Mathf.Rad2Deg;
@@ -51,6 +51,11 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         //transform.Translate(horizontalInputValue * speed, 0, verticalInputValue * speed);
-        rigidbody.MovePosition(Vector3.Lerp((this.transform.position), (this.transform.position + inputVector),Time.deltaTime * speed));
+
+        //Vector3 direction = (inputVector).normalized;
+
+        //rigidbody.MovePosition(direction * speed * Time.deltaTime);
+
+        rigidbody.MovePosition(Vector3.Lerp((this.transform.position), (this.transform.position + inputVector), Time.deltaTime * speed));
     }
 }
