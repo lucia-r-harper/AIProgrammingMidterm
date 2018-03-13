@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private float verticalInputValue;
     private Vector3 inputVector = new Vector3();
 
-    private float speed = 1;
+    private float speed = 10;
     private float angle;
 
     private Rigidbody rigidbody;
@@ -27,11 +27,12 @@ public class PlayerMovement : MonoBehaviour
 	void Update ()
     {
         UpdateInputValues();
-	}
+        Move();
+    }
 
     private void FixedUpdate()
     {
-        Move();
+        
     }
 
     private void UpdateInputValues()
@@ -50,6 +51,6 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         //transform.Translate(horizontalInputValue * speed, 0, verticalInputValue * speed);
-        rigidbody.MovePosition(this.transform.position + inputVector);
+        rigidbody.MovePosition(Vector3.Lerp((this.transform.position), (this.transform.position + inputVector),Time.deltaTime * speed));
     }
 }
