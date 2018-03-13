@@ -6,6 +6,7 @@ public class CameraFollowScript : MonoBehaviour
 {
     public Transform Target;
     public Vector3 TargetFollowDistance;
+    private const float followSpeed = 2;
 
 	// Use this for initialization
 	void Start ()
@@ -16,6 +17,6 @@ public class CameraFollowScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        this.transform.position = (Target.position + TargetFollowDistance);
+        this.transform.position = Vector3.Lerp(this.transform.position, (Target.position + TargetFollowDistance), Time.deltaTime * followSpeed);
 	}
 }
