@@ -11,45 +11,51 @@ public class AIPatrolling : AIMovement {
     private AINode homeNode;
     private AINode awayNode;
 
+    private List<AINode> nodesToPatrol;
+    private AINode[] nodesToPatrolArray;
+    private AINode targetNode;
+
     private const float stepSpeed = 5;
     private const float turnSpeed = 6;
 
     PatrolState patrolState = PatrolState.atAway;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        nodesToPatrol = GetComponentInParent<AIStateManager>().NodesToPatrol;
+        targetNode = nodesToPatrol[0];
+        homeNode = nodesToPatrol[0];
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        UpdatePatrolState();
-        switch (patrolState)
-        {
-            case PatrolState.atHome:
-                PatrolToNewNode(awayNode);
-                break;
-            case PatrolState.atAway:
-                PatrolToNewNode(homeNode);
-                break;
-            default:
-                break;
-        }
+        UpdateTargetNode();
+        PatrolToNewNode(targetNode);
     }
 
-    
-
-    private void UpdatePatrolState()
+    private void UpdateTargetNode()
     {
-        if (transform.position == homeNode.transform.position)
+        foreach (AINode node in nodesToPatrol)
         {
-            patrolState = PatrolState.atHome;
-        }
+            //Debug.Log(nodeIndex);
 
-        if (transform.position == awayNode.transform.position)
-        {
-            patrolState = PatrolState.atAway;
+            if (transform.position == node.transform.position)
+            {
+
+                if ((nodesToPatrol.IndexOf(node) + 1) == nodesToPatrol.Count)
+                {
+                    //Debug.Log("hello!");
+                    targetNode = homeNode;
+                }
+                else
+                {
+                    targetNode = nodesToPatrol[nodesToPatrol.IndexOf(node) + 1];
+                }
+
+            }
+            //nodeIndex++;
         }
     }
 
@@ -74,10 +80,12 @@ public class AIPatrolling : AIMovement {
         Vector3 targetDir = nodeToPatrolTo.transform.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
         Debug.DrawRay(transform.position, newDir, Color.red);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
 
-        //transform.LookAt(nodeToPatrolTo.transform);
-
-        transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
+        if (transform.rotation == Quaternion.LookRotation(newDir))
+        {
+            Debug.Log("hello!");
+            transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
+        }
     }
 }

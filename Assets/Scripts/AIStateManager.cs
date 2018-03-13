@@ -9,6 +9,8 @@ public class AIStateManager : MonoBehaviour
     public AINode Home;
     public AINode Away;
 
+    public List<AINode> NodesToPatrol;
+
     private AIState currentAIState;
     public AIState CurrentAIState
     {

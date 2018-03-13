@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 115
+  controlID: 11
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 95
+  controlID: 12
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 96
+  controlID: 13
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -372,7 +372,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 502c0000
     m_LastClickedID: 11344
-    m_ExpandedIDs: 9efbffff00000000ee2b0000
+    m_ExpandedIDs: 9efbffff00000000ee2b0000502c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -423,14 +423,14 @@ MonoBehaviour:
     height: 515
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 24.96591901144055
+  lastFramingTime: 2677.264080331952
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 5, y: 0.5, z: 0}
+    m_Target: {x: -5, y: 0.5, z: 1}
     speed: 2
-    m_Value: {x: 5, y: 0.5, z: 0}
+    m_Value: {x: -5, y: 0.5, z: 1}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -454,13 +454,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.23875119, y: 0.6739783, z: -0.24587646, w: -0.6544507}
+    m_Target: {x: -0.16211855, y: -0.6455718, z: 0.14287657, w: -0.7324993}
     speed: 2
-    m_Value: {x: -0.23875003, y: 0.67397505, z: -0.24587525, w: -0.6544475}
+    m_Value: {x: -0.16211739, y: -0.64556724, z: 0.14287554, w: -0.73249406}
   m_Size:
-    m_Target: 10.53117
+    m_Target: 2.8578837
     speed: 2
-    m_Value: 10.53117
+    m_Value: 2.8578837
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -567,18 +567,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Art
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Art
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Documents\School\Spring2018\AIProgramming\Midterm\AIProgrammingMidterm
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 42290000
-    m_LastClickedID: 10562
+    m_SelectedIDs: b2280000
+    m_LastClickedID: 10418
     m_ExpandedIDs: 000000006a280000922c0000942c0000962c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -632,8 +632,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 502c0000
-    m_LastClickedInstanceID: 11344
+    m_SelectedInstanceIDs: ee2b0000
+    m_LastClickedInstanceID: 11246
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: d2210000a022000000000000dc21000036220000f02100006a220000e62100002022000038520000c82b00002c4f0000284f0000ea2a00006c2b000062a000009a280000
     m_RenameOverlay:
