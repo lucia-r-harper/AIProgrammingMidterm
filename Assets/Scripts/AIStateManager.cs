@@ -9,7 +9,14 @@ public class AIStateManager : MonoBehaviour
     public AINode Home;
     public AINode Away;
 
-    private AIState aiState;
+    private AIState currentAIState;
+    public AIState CurrentAIState
+    {
+        get
+        {
+            return currentAIState;
+        }
+    }
 	// Use this for initialization
 	void Start ()
     {
@@ -20,7 +27,7 @@ public class AIStateManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        switch (aiState)
+        switch (currentAIState)
         {
             case AIState.Chasing:
                 break;
@@ -61,7 +68,7 @@ public class AIStateManager : MonoBehaviour
 
     public void SetAIState(AIState newState)
     {
-        aiState = newState;
+        currentAIState = newState;
         RemoveAIBehaviours();
         AddMovementBehaviour(newState);
     }

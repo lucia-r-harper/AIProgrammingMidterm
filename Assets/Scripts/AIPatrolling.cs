@@ -12,7 +12,7 @@ public class AIPatrolling : AIMovement {
     private AINode awayNode;
 
     private const float stepSpeed = 5;
-    private const float turnSpeed = 5;
+    private const float turnSpeed = 6;
 
     PatrolState patrolState = PatrolState.atAway;
 
@@ -74,7 +74,9 @@ public class AIPatrolling : AIMovement {
         Vector3 targetDir = nodeToPatrolTo.transform.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
         Debug.DrawRay(transform.position, newDir, Color.red);
-        transform.rotation = Quaternion.LookRotation(newDir);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime);
+
+        //transform.LookAt(nodeToPatrolTo.transform);
 
         transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
     }

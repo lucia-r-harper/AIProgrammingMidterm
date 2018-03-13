@@ -5,15 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))]
 public class VisionCone : MonoBehaviour
 {
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-        
-    //}
+    AIStateManager aiCharacter;
+    private void Start()
+    {
+        aiCharacter = GetComponentInParent<AIStateManager>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Change AIState once a player is in the Vision field of vision
-        GetComponentInParent<AIStateManager>().SetAIState(AIState.Chasing);
+        if (other.gameObject.tag == "Player" && aiCharacter.CurrentAIState != AIState.Chasing)
+        {
+            //Change AIState once a player is in the Vision field of vision
+            aiCharacter.SetAIState(AIState.Chasing);
+            GetComponentInParent<AIChasing>().SetTargetToChase(other.transform);
+        }
     }
 }
