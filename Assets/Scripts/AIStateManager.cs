@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AIState { Chasing, Patroling}
+public enum AIState { Chasing, Patroling, Looking}
 public class AIStateManager : MonoBehaviour
 {
     public AINode Home;
