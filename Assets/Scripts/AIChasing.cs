@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIChasing : AIMovement
 {
+    NavMeshAgent agent;
     private Transform target;
     private const float stepSpeed = 7;
     private const float turnSpeed = 8;
@@ -15,6 +17,11 @@ public class AIChasing : AIMovement
     private const float secondsUntilAIMustResumePatroling = 2;
 
     private bool isTargetStillInView = true;
+
+    public AIChasing()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     public bool IsTargetStillInView
     {
@@ -35,8 +42,8 @@ public class AIChasing : AIMovement
     // Use this for initialization
     void Start ()
     {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -44,6 +51,7 @@ public class AIChasing : AIMovement
         if (target != null)
         {
             Chase();
+            //Chase2();
         }
         if (isTargetStillInView == false)
         {
@@ -80,5 +88,10 @@ public class AIChasing : AIMovement
         //transform.LookAt(nodeToPatrolTo.transform);
 
         transform.position = Vector3.MoveTowards(gameObject.transform.position, target.transform.position, step);
+    }
+
+    private void Chase2()
+    {
+        agent.SetDestination(target.position);
     }
 }
