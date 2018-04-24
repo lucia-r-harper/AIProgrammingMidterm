@@ -40,6 +40,11 @@ public class AIStateManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        Debug.Log(currentAIState);
+    }
+
     /// <summary>
     /// Removes all associated AI behaviours
     /// </summary>

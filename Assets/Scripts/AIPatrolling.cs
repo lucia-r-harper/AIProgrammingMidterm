@@ -30,6 +30,8 @@ public class AIPatrolling : AIMovement {
 	// Update is called once per frame
 	void Update ()
     {
+        IdlePatrolState(); 
+
         UpdateTargetNode();
         PatrolToNewNode(targetNode);
     }
@@ -68,8 +70,13 @@ public class AIPatrolling : AIMovement {
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
 
-        Debug.Log("hello!");
+        //Debug.Log("hello!");
         transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
+    }
+
+    void IdlePatrolState()
+    {
+        this.transform.position = Vector3.MoveTowards(this.transform.position, homeNode.transform.position, Time.deltaTime * turnSpeed);
     }
 
     //private bool isFinishedRotation(float rotationThresh)
