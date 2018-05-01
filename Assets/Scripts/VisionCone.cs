@@ -6,6 +6,7 @@ using UnityEngine;
 public class VisionCone : MonoBehaviour
 {
     AIStateManager aiCharacter;
+    WaitForSeconds memory = new WaitForSeconds(3);
     private void Start()
     {
         aiCharacter = GetComponentInParent<AIStateManager>();
@@ -15,6 +16,7 @@ public class VisionCone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            StopCoroutine(ForgetPlayer());
             if (aiCharacter.CurrentAIState != AIState.Chasing)
             {
                 //Change AIState once a player is in the Vision field of vision
@@ -33,8 +35,14 @@ public class VisionCone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            GetComponentInParent<AIChasing>().MomentPlayerLeftVision = Time.deltaTime;
-            GetComponentInParent<AIChasing>().IsTargetStillInView = false;
+            //GetComponentInParent<AIChasing>().MomentPlayerLeftVision = Time.deltaTime;
+            StartCoroutine(ForgetPlayer());
         }
+    }
+
+    private IEnumerator ForgetPlayer()
+    {
+        yield return memory;
+        GetComponentInParent<AIChasing>().IsTargetStillInView = false;
     }
 }

@@ -9,10 +9,7 @@ public class AIPatrolling : AIMovement {
 
     //AI should patrol beteween these two home nodes
     private AINode homeNode;
-    private AINode awayNode;
 
-    private List<AINode> nodesToPatrol;
-    private AINode[] nodesToPatrolArray;
     private AINode targetNode;
 
     private const float stepSpeed = 5;
@@ -23,7 +20,8 @@ public class AIPatrolling : AIMovement {
 	// Use this for initialization
 	void Start ()
     {
-        nodesToPatrol = GetComponentInParent<AIStateManager>().NodesToPatrol;
+        //nodesToPatrol = GetComponentInParent<AIStateManager>().NodesToPatrol;
+        homeNode = GetComponentInParent<AIStateManager>().Home;
         targetNode = homeNode;
 	}
 	
@@ -32,26 +30,22 @@ public class AIPatrolling : AIMovement {
     {
         IdlePatrolState(); 
 
-        UpdateTargetNode();
-        PatrolToNewNode(targetNode);
-    }
-
-    private void UpdateTargetNode()
-    {
-        if (transform.position == targetNode.transform.position)
-        {
-            targetNode = targetNode.nextNodeInPath;
-            PatrolToNewNode(targetNode);
-        }
+        //UpdateTargetNode();
+        //PatrolToNewNode(targetNode);
     }
 
     /// <summary>
     /// Used in the state manager to set the Nodes
     /// </summary>
-    public void SetHomeAndAwayNodes(AINode home, AINode away)
+    public void SetHomeNode(AINode home)
     {
         homeNode = home;
-        awayNode = away;
+        //awayNode = away;
+    }
+
+    public void SetNewTargetNode(AINode newTargetNode)
+    {
+        targetNode = newTargetNode;
     }
 
     void PatrolToNewNode(AINode nodeToPatrolTo)
@@ -70,25 +64,28 @@ public class AIPatrolling : AIMovement {
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
 
-        //Debug.Log("hello!");
-        transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
+        //transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
     }
 
     void IdlePatrolState()
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, homeNode.transform.position, Time.deltaTime * turnSpeed);
+        if (homeNode.gameObject.layer == 4)
+        {
+            Debug.Log("Lordy!!");
+        }
+        else if (homeNode.gameObject.layer == 0)
+        {
+            Debug.Log("Thank ya jesus!!");
+        }
     }
 
-    //private bool isFinishedRotation(float rotationThresh)
-    //{
-    //    if (rotationThresh == 1)
-    //    {
-    //        return true;
-    //    }
-
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "NodeTrigger")
+        {
+            //NODE NOT UPDATING
+            other.GetComponent<AINode>().previousNodeInPath = homeNode;
+        }
+    }
 }

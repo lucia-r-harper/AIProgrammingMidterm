@@ -7,9 +7,9 @@ public enum AIState { Chasing, Patroling, Looking}
 public class AIStateManager : MonoBehaviour
 {
     public AINode Home;
-    public AINode Away;
+    //public AINode Away;
 
-    public List<AINode> NodesToPatrol;
+    //public List<AINode> NodesToPatrol;
 
     private AIState currentAIState;
     public AIState CurrentAIState
@@ -42,7 +42,7 @@ public class AIStateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(currentAIState);
+        //Debug.Log(currentAIState);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public class AIStateManager : MonoBehaviour
                 break;
             case AIState.Patroling:
                 this.gameObject.AddComponent<AIPatrolling>();
-                this.gameObject.GetComponent<AIPatrolling>().SetHomeAndAwayNodes(Home, Away);
+                this.gameObject.GetComponent<AIPatrolling>().SetHomeNode(Home);
                 break;
             default:
                 break;

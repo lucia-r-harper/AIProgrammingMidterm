@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AINode : MonoBehaviour {
 
-    public bool wasPlayerOccupyingThisNode;
-    public List<AINode> NeighbourNodes = new List<AINode>();
+    //public bool wasPlayerOccupyingThisNode;
+    //public List<AINode> NeighbourNodes = new List<AINode>();
     public AINode nextNodeInPath;
+    public AINode previousNodeInPath;
 
 	// Use this for initialization
 	void Start ()
@@ -22,21 +23,33 @@ public class AINode : MonoBehaviour {
 
     void DirectActionToNode()
     {
-        for (int i = 0; i < NeighbourNodes.Count; i++)
-        {
-            if (NeighbourNodes[i].wasPlayerOccupyingThisNode == true)
-            {
-                //return the transform of this node to the AI Actor as a waypoint to go to
-            }
-        }
     }
 
     void OnDrawGizmos()
     {
-        foreach (AINode node in NeighbourNodes)
+        Gizmos.color = Color.red;
+        if (nextNodeInPath != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, node.transform.position);
+            Gizmos.DrawLine(transform.position, nextNodeInPath.transform.position);
+        }
+        if (previousNodeInPath != null)
+        {
+            Gizmos.DrawLine(transform.position, previousNodeInPath.transform.position);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<AIPatrolling>())
+        {
+            if (nextNodeInPath != null)
+            {
+                other.GetComponent<AIPatrolling>().SetNewTargetNode(nextNodeInPath);
+            }
+            else
+            {
+                other.GetComponent<AIPatrolling>().SetNewTargetNode(previousNodeInPath);
+            }
         }
     }
 }
