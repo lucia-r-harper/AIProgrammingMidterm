@@ -70,6 +70,12 @@ public class AIPatrolling : AIMovement {
     void IdlePatrolState()
     {
         this.transform.position = Vector3.MoveTowards(this.transform.position, homeNode.transform.position, Time.deltaTime * turnSpeed);
+
+        Vector3 targetDir = homeNode.transform.position - transform.position;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
+        Debug.DrawRay(transform.position, newDir, Color.red);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
         if (homeNode.gameObject.layer == 4)
         {
             Debug.Log("Lordy!!");
@@ -85,7 +91,7 @@ public class AIPatrolling : AIMovement {
         if (other.tag == "NodeTrigger")
         {
             //NODE NOT UPDATING
-            other.GetComponent<AINode>().previousNodeInPath = homeNode;
+            homeNode = other.GetComponent<AINode>().previousNodeInPath;
         }
     }
 }
