@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIProgrammingMidterm", "AIProgrammingMidterm.csproj", "{A53E2855-634E-2729-D4FD-FD51DE3EA6B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIProgrammingMidterm.Editor", "AIProgrammingMidterm.Editor.csproj", "{FC87D435-2C55-9ECD-68D4-7CA8285869E1}"
