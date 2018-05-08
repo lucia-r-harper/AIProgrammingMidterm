@@ -315,6 +315,7 @@
     <Compile Include="Assets\Scripts\CameraFollowScript.cs" />
     <Compile Include="Assets\Scripts\EnemyAgent.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\ShoutZone.cs" />
     <Compile Include="Assets\Scripts\VisionCone.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIPatrolling : AIMovement {
+public class AIPatrolling : AIMovement
+ {
 
     public enum PatrolState { atHome, atAway};
+    private enum PathFollowState { GoToNextNode, GoToPreviousNode};
+    private PathFollowState pathFollowState = PathFollowState.GoToNextNode;
+
+    //Set nodeToMoveTowards to me when there is no next node in path
+    //OR
+    //when moving from chasing back to patroling
+    private AINode homeNode;
 
     //AI should patrol beteween these two home nodes
-    private AINode homeNode;
+    private AINode nodeToMoveTowards;
 
     private AINode targetNode;
 
@@ -21,17 +29,15 @@ public class AIPatrolling : AIMovement {
 	void Start ()
     {
         //nodesToPatrol = GetComponentInParent<AIStateManager>().NodesToPatrol;
+        nodeToMoveTowards = GetComponentInParent<AIStateManager>().Home;
         homeNode = GetComponentInParent<AIStateManager>().Home;
-        targetNode = homeNode;
+        targetNode = nodeToMoveTowards;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        IdlePatrolState(); 
-
-        //UpdateTargetNode();
-        //PatrolToNewNode(targetNode);
+        IdlePatrolState();
     }
 
     /// <summary>
@@ -39,7 +45,7 @@ public class AIPatrolling : AIMovement {
     /// </summary>
     public void SetHomeNode(AINode home)
     {
-        homeNode = home;
+        nodeToMoveTowards = home;
         //awayNode = away;
     }
 
@@ -48,50 +54,45 @@ public class AIPatrolling : AIMovement {
         targetNode = newTargetNode;
     }
 
-    void PatrolToNewNode(AINode nodeToPatrolTo)
+    public void GoHome()
     {
-        //first, set transform equal to the first AI node.
-        //Second, move in between the two nodes, rotating between each one
-
-        //Looks at the home node so they look where they're walking
-        float step = stepSpeed * Time.deltaTime;
-        float turn = turnSpeed * Time.deltaTime;
-
-
-        Vector3 targetDir = nodeToPatrolTo.transform.position - transform.position;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
-        Debug.DrawRay(transform.position, newDir, Color.red);
-
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
-
-        //transform.position = Vector3.MoveTowards(gameObject.transform.position, nodeToPatrolTo.transform.position, step);
+        nodeToMoveTowards = homeNode;
     }
 
     void IdlePatrolState()
     {
-        this.transform.position = Vector3.MoveTowards(this.transform.position, homeNode.transform.position, Time.deltaTime * turnSpeed);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, nodeToMoveTowards.transform.position, Time.deltaTime * turnSpeed);
 
-        Vector3 targetDir = homeNode.transform.position - transform.position;
+        Vector3 targetDir = nodeToMoveTowards.transform.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, turnSpeed, 0.0F);
         Debug.DrawRay(transform.position, newDir, Color.red);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(newDir), Time.deltaTime * turnSpeed);
-        if (homeNode.gameObject.layer == 4)
-        {
-            Debug.Log("Lordy!!");
-        }
-        else if (homeNode.gameObject.layer == 0)
-        {
-            Debug.Log("Thank ya jesus!!");
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "NodeTrigger")
         {
-            //NODE NOT UPDATING
-            homeNode = other.GetComponent<AINode>().previousNodeInPath;
+            if (other.GetComponent<AINode>().NextNodeInPath == null)
+            {
+                pathFollowState = PathFollowState.GoToPreviousNode;
+            }
+            if (other.GetComponent<AINode>().PreviousNodeInPath == null)
+            {
+                pathFollowState = PathFollowState.GoToNextNode;
+            } 
+            switch (pathFollowState)
+            {
+                case PathFollowState.GoToNextNode:
+                    nodeToMoveTowards = other.GetComponent<AINode>().NextNodeInPath;
+                    break;
+                case PathFollowState.GoToPreviousNode:
+                    nodeToMoveTowards = other.GetComponent<AINode>().PreviousNodeInPath;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

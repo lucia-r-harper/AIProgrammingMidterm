@@ -6,8 +6,9 @@ public class AINode : MonoBehaviour {
 
     //public bool wasPlayerOccupyingThisNode;
     //public List<AINode> NeighbourNodes = new List<AINode>();
-    public AINode nextNodeInPath;
-    public AINode previousNodeInPath;
+    //public AINode nextNodeInPath;
+    public AINode NextNodeInPath;
+    public AINode PreviousNodeInPath;
 
 	// Use this for initialization
 	void Start ()
@@ -28,13 +29,13 @@ public class AINode : MonoBehaviour {
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        if (nextNodeInPath != null)
+        //if (nextNodeInPath != null)
+        //{
+        //    Gizmos.DrawLine(transform.position, nextNodeInPath.transform.position);
+        //}
+        if (NextNodeInPath != null)
         {
-            Gizmos.DrawLine(transform.position, nextNodeInPath.transform.position);
-        }
-        if (previousNodeInPath != null)
-        {
-            Gizmos.DrawLine(transform.position, previousNodeInPath.transform.position);
+            Gizmos.DrawLine(transform.position, NextNodeInPath.transform.position);
         }
     }
 
@@ -42,14 +43,19 @@ public class AINode : MonoBehaviour {
     {
         if (other.GetComponent<AIPatrolling>())
         {
-            if (nextNodeInPath != null)
+            //if (nextNodeInPath != null)
+            //{
+            //    other.GetComponent<AIPatrolling>().SetNewTargetNode(nextNodeInPath);
+            //}
+            //else
+            //{
+            //    other.GetComponent<AIPatrolling>().SetNewTargetNode(NextNodeInPath);
+            //}
+            if (NextNodeInPath == null)
             {
-                other.GetComponent<AIPatrolling>().SetNewTargetNode(nextNodeInPath);
+                other.GetComponent<AIPatrolling>().GoHome();
             }
-            else
-            {
-                other.GetComponent<AIPatrolling>().SetNewTargetNode(previousNodeInPath);
-            }
+            other.GetComponent<AIPatrolling>().SetNewTargetNode(NextNodeInPath);
         }
     }
 }
